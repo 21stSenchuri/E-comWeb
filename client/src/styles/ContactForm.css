@@ -1,0 +1,165 @@
+/* Overall page background */
+body {
+    background-color: #dfe2e4; /* Light blue background */
+    margin: 0;
+    padding: 0;
+}
+
+/* Contact Page Styles */
+.contact-page {
+    display: flex;
+    flex-direction: column;
+    height: 150vh; /* Full viewport height */
+}
+
+.map-container {
+    flex: 1; /* Map section takes full height */
+    width: 100%;
+}
+
+.map {
+    width: 100%;
+    height: 100%;
+    border: 0;
+    border-radius: 8px;
+}
+
+.contact-form-container {
+    padding: 20px;
+    background-color: #ecbfe5;
+    border-top: 1px solid #ddd;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.contact-form-container h2 {
+    color: #060607;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.contact-form .form-label {
+    color: #333;
+    font-weight: bold;
+    margin-bottom: 8px;
+    display: block;
+}
+
+.contact-form .form-control {
+    background-color: #f4f4f4;
+    border: 1px solid #ccc;
+    padding: 12px;
+    border-radius: 5px;
+    font-size: 16px;
+    margin-bottom: 20px;
+    color: #333;
+    width: 100%; /* Ensure it does not overflow */
+}
+
+.contact-form .form-control:focus {
+    border-color: #007bff;
+    outline: none;
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.3);
+}
+
+.contact-form textarea {
+    resize: vertical;
+    width: 100%; /* Ensure it does not overflow */
+}
+
+.contact-form .btn-primary {
+    background-color: #007bff;
+    border: none;
+    color: white;
+    padding: 14px 20px;
+    font-size: 16px;
+    border-radius: 5px;
+    width: 100%;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.contact-form .btn-primary:hover {
+    background-color: #0056b3;
+}
+/* General Form Styles */
+.contact-form {
+    max-width: 500px; /* Set a maximum width for the form */
+    margin: 0 auto; /* Center the form horizontally */
+    padding: 20px;
+}
+
+/* Label Styling */
+.form-label {
+    font-size: 16px; /* Font size for labels */
+    color: #333; /* Dark gray color for text */
+    font-weight: bold; /* Make label text bold */
+    margin-bottom: 8px; /* Space below the label */
+    display: block; /* Ensure labels are block-level elements */
+    line-height: 1.5; /* Improve readability by adjusting line height */
+}
+
+/* Input and Textarea Styles */
+.form-control {
+    background-color: #f4f4f4;
+    border: 1px solid #ccc;
+    padding: 12px;
+    border-radius: 5px;
+    font-size: 16px;
+    color: #333;
+    width: 100%; /* Ensure inputs and textarea fill the container */
+    box-sizing: border-box; /* Include padding and border in the element's total width and height */
+    margin-bottom: 20px; /* Space below each form element */
+}
+
+.form-control:focus {
+    border-color: #007bff;
+    outline: none;
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.3);
+}
+
+textarea {
+    resize: vertical; /* Allow vertical resizing only */
+}
+
+/* Button Styling */
+.btn-primary {
+    background-color: #007bff;
+    border: none;
+    color: white;
+    padding: 14px 20px;
+    font-size: 16px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    width: 100%; /* Ensure button fills the width of the form */
+}
+
+.btn-primary:hover {
+    background-color: #0056b3;
+}
+
+
+
+
+/* Social Media Icons Styling */
+.social-media {
+    margin-top: 20px;
+}
+
+.social-media h3 {
+    color: #0e1011;
+    margin-bottom: 10px;
+}
+
+.social-media a {
+    font-size: 24px;
+    color: #333;
+    margin-right: 15px;
+    transition: color 0.3s ease;
+}
+
+.social-media a:hover {
+    color: #007bff;
+}
+

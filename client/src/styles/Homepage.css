@@ -1,0 +1,71 @@
+
+.banner-container {
+  position: relative; /* create a containing block for the slider */
+  width: 100%; /* take up the full width of the screen */
+  height: 90vh; /* take up the full height of the screen */
+  overflow: hidden; /* prevent the images from flowing out of the container */
+}
+
+.banner-slider {
+  position: relative; /* create a containing block for the images */
+  width: 100%; /* take up the full width of the container */
+  height: 100%; /* take up the full height of the container */
+  white-space: nowrap; /* prevent the images from wrapping to the next line */
+}
+
+.banner-slider img {
+  width: 100%; /* make each image take up the full width of the slider */
+  height: 100%; /* make each image take up the full height of the slider */
+  object-fit: cover; /* make the image cover the entire slider area */
+  display: inline-block; /* make the images display inline */
+  margin: 0; /* remove any default margin */
+  padding: 0; /* remove any default padding */
+}
+
+/* basic carousel effect */
+.banner-slider img:first-child {
+  margin-left: 0; /* remove the margin from the first image */
+}
+
+.banner-slider img:not(:first-child) {
+  margin-left: -100%; /* move each subsequent image to the left by its own width */
+}
+
+.category {
+    flex-wrap: wrap;
+    margin-top: 80px !important;
+  }
+  .category .card {
+    background-color: rgba(128, 128, 128, 0.097);
+    width: 18rem;
+  }
+  .category .card-name-price {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+  }
+  
+  .category .card-price {
+    color: green;
+    font-weight: bold;
+  }
+  .category button {
+    border-radius: 0;
+    width: 100%;
+    border-top-left-radius: 5px;
+    border-bottom-right-radius: 5px;
+    font-size: 14px;
+    font-weight: bold;
+  }
+  
+  .category .card-text {
+    color: rgb(90, 89, 89);
+  }
+  
+  .category .card img:hover {
+    transform: scale(0.9);
+  }
+  
+  .category .card-img-top {
+    height: 300px !important;
+  }
