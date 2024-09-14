@@ -6,7 +6,7 @@ import { Checkbox, Radio } from "antd";
 import { Prices } from "../components/Prices";
 import { useCart } from "../context/cart";
 import toast from "react-hot-toast";
-import {AiOutlineReload} from  'react-icons/ai';
+import { AiOutlineReload } from "react-icons/ai";
 import "../styles/Homepage.css";
 
 const HomePage = () => {
@@ -20,7 +20,7 @@ const HomePage = () => {
   const [page, setPage] = useState(1);
   const [loading, setLoading] = useState(false);
 
-  //get all cat
+  // Fetch categories on load
   const getAllCategory = async () => {
     try {
       const { data } = await axios.get("/api/v1/category/get-category");
@@ -35,8 +35,20 @@ const HomePage = () => {
   useEffect(() => {
     getAllCategory();
     getTotal();
+    getAllProducts(); // Fetch all products on initial load
   }, []);
-  //get products
+
+  // Get total count of products
+  const getTotal = async () => {
+    try {
+      const { data } = await axios.get("/api/v1/product/product-count");
+      setTotal(data?.total);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  // Get products based on page number
   const getAllProducts = async () => {
     try {
       setLoading(true);
@@ -49,34 +61,26 @@ const HomePage = () => {
     }
   };
 
-  //getTOtal COunt
-  const getTotal = async () => {
-    try {
-      const { data } = await axios.get("/api/v1/product/product-count");
-      setTotal(data?.total);
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
-  useEffect(() => {
-    if (page === 1) return;
-    loadMore();
-  }, [page]);
-  //load more
+  // Load more products
   const loadMore = async () => {
     try {
       setLoading(true);
       const { data } = await axios.get(`/api/v1/product/product-list/${page}`);
       setLoading(false);
-      setProducts([...products, ...data?.products]);
+      setProducts((prevProducts) => [...prevProducts, ...data?.products]); // Append new products
     } catch (error) {
-      console.log(error);
       setLoading(false);
+      console.log(error);
     }
   };
 
-  // filter by cat
+  // Update products list when page changes
+  useEffect(() => {
+    if (page === 1) return;
+    loadMore();
+  }, [page]);
+
+  // Handle filtering by category
   const handleFilter = (value, id) => {
     let all = [...checked];
     if (value) {
@@ -86,15 +90,8 @@ const HomePage = () => {
     }
     setChecked(all);
   };
-  useEffect(() => {
-    if (!checked.length || !radio.length) getAllProducts();
-  }, [checked.length, radio.length]);
 
-  useEffect(() => {
-    if (checked.length || radio.length) filterProduct();
-  }, [checked, radio]);
-
-  //get filterd product
+  // Filter products
   const filterProduct = async () => {
     try {
       const { data } = await axios.post("/api/v1/product/product-filters", {
@@ -106,14 +103,30 @@ const HomePage = () => {
       console.log(error);
     }
   };
+
+  // Update products based on filters
+  useEffect(() => {
+    if (!checked.length && !radio.length) {
+      getAllProducts();
+    } else {
+      filterProduct();
+    }
+  }, [checked, radio]);
+
+  // Reset filters
+  const resetFilters = () => {
+    setChecked([]);
+    setRadio([]);
+    getAllProducts();
+  };
+
   return (
     <Layout title={"All Products - Best offers "}>
       {/* banner image */}
       <div className="banner-container">
         <div className="banner-slider">
           <img src="/images/banner3.jpg" alt="banner image 1" />
-          
-    </div>
+        </div>
       </div>
       {/* banner image */}
       <div className="container-fluid row mt-3">
@@ -122,7 +135,8 @@ const HomePage = () => {
           <div className="d-flex flex-column">
             {categories?.map((c) => (
               <Checkbox
-                key={c._id}
+                key={c._id + Math.random() * 4000}
+                checked={checked.includes(c._id)}
                 onChange={(e) => handleFilter(e.target.checked, c._id)}
               >
                 {c.name}
@@ -134,17 +148,14 @@ const HomePage = () => {
           <div className="d-flex flex-column">
             <Radio.Group onChange={(e) => setRadio(e.target.value)}>
               {Prices?.map((p) => (
-                <div key={p._id}>
+                <div key={p._id + Math.random() * 5000}>
                   <Radio value={p.array}>{p.name}</Radio>
                 </div>
               ))}
             </Radio.Group>
           </div>
           <div className="d-flex flex-column">
-            <button
-              className="btn btn-danger"
-              onClick={() => window.location.reload()}
-            >
+            <button className="btn btn-danger" onClick={resetFilters}>
               RESET FILTERS
             </button>
           </div>
@@ -153,7 +164,11 @@ const HomePage = () => {
           <h1 className="text-center">All Products</h1>
           <div className="d-flex flex-wrap">
             {products?.map((p) => (
-              <div className="card m-2" style={{ width: "18rem" }}>
+              <div
+                className="card m-2"
+                style={{ width: "18rem" }}
+                key={p._id + Math.random() * 5000}
+              >
                 <img
                   src={`/api/v1/product/product-photo/${p._id}`}
                   className="card-img-top"
@@ -210,8 +225,7 @@ const HomePage = () => {
                   "Loading ..."
                 ) : (
                   <>
-                    {" "}
-                    Loadmore <AiOutlineReload />
+                    Load More <AiOutlineReload />
                   </>
                 )}
               </button>
