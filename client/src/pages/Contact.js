@@ -102,13 +102,11 @@ const Contact = () => {
 };
 
 export default Contact;*/
-import React from "react";
+import React, { useState } from "react";
 import Layout from "./../components/layout/layout";
 import ContactForm from "../styles/ContactForm.css";
-import '@fortawesome/fontawesome-free/css/all.min.css';
-
-
-
+import "@fortawesome/fontawesome-free/css/all.min.css";
+import emailjs from "@emailjs/browser";
 
 const Contact = () => {
   return (
@@ -131,54 +129,83 @@ const Contact = () => {
         {/* Contact Form Section */}
         <div className="contact-form-container">
           <h2>Contact Us</h2>
-          <form className="contact-form">
-            <div>
-              <label htmlFor="email" className="form-label">Email address</label>
-              <input type="email" className="form-control" id="email" aria-describedby="emailHelp" />
-              
-            </div>
-            <div className="mb-3">
-              <label htmlFor="password" className="form-label">Password</label>
-              <input type="password" className="form-control" id="password" />
-            </div>
-            <div className="mb-3">
-              <label htmlFor="message" className="form-label">Message</label>
-              <textarea id="message" className="form-control" rows="4" placeholder="Enter your message here..."></textarea>
-            </div>
-            <button type="submit" className="btn btn-primary">Submit</button>
-            <div className="social-media">
-              <h3>Follow Us</h3>
-              <a href="https://facebook.com/yourpage" target="_blank" rel="noopener noreferrer" aria-label="Facebook">
-                <i className="fab fa-facebook-f"></i>
-              </a>
-              <a href="https://x.com/yourprofile" target="_blank" rel="noopener noreferrer" aria-label="x">
-                <i className="fab fa-x"></i>
-              </a>
-              <a href="https://instagram.com/yourprofile" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
-                <i className="fab fa-instagram"></i>
-              </a>
-              <a href="https://linkedin.com/in/yourprofile" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">
-                <i className="fab fa-linkedin-in"></i>
-               </a>
-               <a href="https://wa.me/+977-9806973596" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp">
-    <i className="fab fa-whatsapp"></i>
-</a>
-
-            </div>
-          </form>
+          <ContactFormComponent />
         </div>
       </div>
     </Layout>
   );
 };
 
+const ContactFormComponent = () => {
+  const [formData, setFormData] = useState({
+    email: "",
+    message: "",
+  });
+
+  const handleChange = (e) => {
+    const { id, value } = e.target;
+    setFormData({ ...formData, [id]: value });
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    emailjs
+      .send(
+        "service_2ch923s", // Replace with your service ID
+        "template_eau6vhy", // Replace with your template ID
+        {
+          email: formData.email,
+          message: formData.message,
+        },
+        "rUoUUSmnWo3nadVtB" // Replace with your user ID
+      )
+      .then(
+        (result) => {
+          console.log("Success:", result.text);
+          alert("Message sent successfully!");
+        },
+        (error) => {
+          console.log("Error:", error.text);
+          alert("Failed to send message. Please try again.");
+        }
+      );
+  };
+
+  return (
+    <form className="contact-form" onSubmit={handleSubmit}>
+      <div>
+        <label htmlFor="email" className="form-label">
+          Email address
+        </label>
+        <input
+          type="email"
+          className="form-control"
+          id="email"
+          value={formData.email}
+          onChange={handleChange}
+          required
+        />
+      </div>
+      <div className="mb-3">
+        <label htmlFor="message" className="form-label">
+          Message
+        </label>
+        <textarea
+          id="message"
+          className="form-control"
+          rows="4"
+          value={formData.message}
+          onChange={handleChange}
+          placeholder="Enter your message here..."
+          required
+        ></textarea>
+      </div>
+      <button type="submit" className="btn btn-primary">
+        Submit
+      </button>
+    </form>
+  );
+};
+
 export default Contact;
-
-
-
-
-
-
-
-
-         
